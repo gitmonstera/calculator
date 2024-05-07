@@ -1,8 +1,10 @@
 package com.example.calc
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -38,16 +40,16 @@ class MainActivity : AppCompatActivity() {
         val div: Button = findViewById(R.id.division)
         val multiply: Button = findViewById(R.id.multiply)
 
-        btn0.setOnClickListener {SetTextFilds("0")}
-        btn1.setOnClickListener {SetTextFilds("1")}
-        btn2.setOnClickListener {SetTextFilds("2")}
-        btn3.setOnClickListener {SetTextFilds("3")}
-        btn4.setOnClickListener {SetTextFilds("4")}
-        btn5.setOnClickListener {SetTextFilds("5")}
-        btn6.setOnClickListener {SetTextFilds("6")}
-        btn7.setOnClickListener {SetTextFilds("7")}
-        btn8.setOnClickListener {SetTextFilds("8")}
-        btn9.setOnClickListener {SetTextFilds("9")}
+        btn0.setOnClickListener { SetTextFilds("0") }
+        btn1.setOnClickListener { SetTextFilds("1") }
+        btn2.setOnClickListener { SetTextFilds("2") }
+        btn3.setOnClickListener { SetTextFilds("3") }
+        btn4.setOnClickListener { SetTextFilds("4") }
+        btn5.setOnClickListener  {SetTextFilds("5") }
+        btn6.setOnClickListener { SetTextFilds("6") }
+        btn7.setOnClickListener { SetTextFilds("7") }
+        btn8.setOnClickListener { SetTextFilds("8") }
+        btn9.setOnClickListener { SetTextFilds("9") }
 
         plus.setOnClickListener {
             if(input.text.isNotEmpty() && input.text.last() != '+')
@@ -89,9 +91,20 @@ class MainActivity : AppCompatActivity() {
             output.text = "" }
 
         res.setOnClickListener {
-            val expression = input.text.toString()
-            val result = ExpressionParser.evaluate(expression, this)
-            output.text = result.toString()
+            try {
+                val expression = input.text.toString()
+                val result = ExpressionParser.evaluate(expression, this)
+                output.text = result.toString()
+            }catch (e: Exception) {
+                when(e){
+                    is IndexOutOfBoundsException -> { Toast.makeText(this, "ERROR X%Y", Toast.LENGTH_LONG).show() }
+                    is NumberFormatException -> { Toast.makeText(this, "ERROR NumberFormatException", Toast.LENGTH_LONG).show() }
+                    else -> {
+                        Log.d("Main", "ERROR: $e")
+                        Toast.makeText(this, "ERROR $e", Toast.LENGTH_LONG).show() }
+                }
+            }
+
         }
 
     }
