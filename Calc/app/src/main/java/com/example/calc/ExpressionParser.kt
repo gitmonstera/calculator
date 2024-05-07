@@ -1,8 +1,11 @@
 package com.example.calc
 
+import android.content.Context
+import android.widget.Toast
+
 object ExpressionParser {
 
-    fun evaluate(expression: String): Double {
+    fun evaluate(expression: String, context: Context): Double {
         val withoutSpaces = expression.replace("\\s+".toRegex(), "")
 
         // Деление выражения на части
@@ -27,9 +30,11 @@ object ExpressionParser {
         var i = 0
         while (i < parts.size) {
             if (parts[i] == "%") {
-                val operand = parts[i - 1].toDouble()
-                val result = operand / 100
+                val value = parts[i - 1].toDouble()
+                val percent =  parts[i + 1].toDouble()
+                val result = value * percent / 100
                 parts[i - 1] = result.toString()
+                parts.removeAt(i)
                 parts.removeAt(i)
             } else {
                 i++

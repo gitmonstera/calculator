@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         res.setOnClickListener {
             val expression = input.text.toString()
-            val result = ExpressionParser.evaluate(expression)
+            val result = ExpressionParser.evaluate(expression, this)
             output.text = result.toString()
         }
 
