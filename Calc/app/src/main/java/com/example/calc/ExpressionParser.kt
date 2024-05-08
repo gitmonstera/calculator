@@ -5,7 +5,7 @@ import android.widget.Toast
 
 object ExpressionParser {
 
-    fun evaluate(expression: String, context: Context): Double {
+    fun evaluate(expression: String): Double {
         val withoutSpaces = expression.replace("\\s+".toRegex(), "")
 
         // Деление выражения на части

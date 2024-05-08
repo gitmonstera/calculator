@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var cheker = true
+
         val output: TextView = findViewById(R.id.output)
         val input: TextView = findViewById(R.id.input)
 
@@ -52,50 +54,92 @@ class MainActivity : AppCompatActivity() {
         btn9.setOnClickListener { SetTextFilds("9") }
 
         plus.setOnClickListener {
-            if(input.text.isNotEmpty() && input.text.last() != '+')
-                SetTextFilds("+")
-            else if(input.text.isEmpty())
-                SetTextFilds("") }
+            try {
+                if(input.text.isNotEmpty() && input.text.last() != '+')
+                    SetTextFilds("+")
+                else if(input.text.isEmpty())
+                    SetTextFilds("")
+                cheker = true
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR: $e")
+            } }
 
         minus.setOnClickListener {
-            if(input.text.last() != '-')
-                SetTextFilds("-")
-            else
-                SetTextFilds("") }
+            try {
+                if(input.text.last() != '-')
+                    SetTextFilds("-")
+                else
+                    SetTextFilds("")
+                cheker = true
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR: $e")
+            } }
         perc.setOnClickListener {
-            if(input.text.last() != '%')
-                SetTextFilds("%")
-            else
-                SetTextFilds("") }
+            try {
+                if(input.text.last() != '%')
+                    SetTextFilds("%")
+                else
+                    SetTextFilds("")
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR: $e")
+            } }
         point.setOnClickListener {
-            if(input.text.isNotEmpty() && input.text.last() != '.'){
-                if(input.text.last().toString().matches(Regex("[0-9]")))
-                    SetTextFilds(".")
-            } else if(input.text.isEmpty())
-                SetTextFilds("")}
+            try {
+                if(cheker) {
+                    if(input.text.isNotEmpty() && input.text.last() != '.'){
+                        if(input.text.last().toString().matches(Regex("[0-9]")))
+                            SetTextFilds(".")
+                    } else if(input.text.isEmpty())
+                        SetTextFilds("")
+                    cheker = false }
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR")
+            } }
 
         div.setOnClickListener {
-            if(input.text.last() != '/')
-                SetTextFilds("/")
-            else
-                SetTextFilds("") }
+            try {
+                if(input.text.last() != '/')
+                    SetTextFilds("/")
+                else
+                    SetTextFilds("")
+                cheker = true
+            } catch (e: Exception) {
+                when (e) {
+                    is NoSuchElementException -> {
+                        input.text = "0/"
+                    }
+                    else -> Log.d("Main", "ERROR: $e")
+                }
+            } }
         multiply.setOnClickListener {
-            if(input.text.last() != '*')
-                SetTextFilds("*")
-            else
-                SetTextFilds("") }
+            try {
+                if(input.text.last() != '*')
+                    SetTextFilds("*")
+                else
+                    SetTextFilds("")
+                cheker = true
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR")
+            } }
 
         mp.setOnClickListener { SetTextFilds("") }
         ac.setOnClickListener {
-            input.text = ""
-            output.text = "" }
+            try {
+                input.text = ""
+                output.text = ""
+                cheker = true
+            } catch (e: Exception) {
+                Log.d("Main", "ERROR") } }
 
         res.setOnClickListener {
             try {
                 val expression = input.text.toString()
-                val result = ExpressionParser.evaluate(expression, this)
+                val result = ExpressionParser.evaluate(expression)
                 output.text = result.toString()
-            }catch (e: Exception) {
+                if(result.toString() == "Infinity" || result.toString() == "ERROR"){
+                    output.text = "ERROR"
+                }
+            } catch (e: Exception) {
                 when(e){
                     is IndexOutOfBoundsException -> { Toast.makeText(this, "ERROR X%Y", Toast.LENGTH_LONG).show() }
                     is NumberFormatException -> { Toast.makeText(this, "ERROR NumberFormatException", Toast.LENGTH_LONG).show() }
