@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
             val res: Button = findViewById(R.id.result)
             val point: Button = findViewById(R.id.point)
 
+            val exp2: Button = findViewById(R.id.exp2)
+            val exp3: Button = findViewById(R.id.exp3)
+            val sqrt: Button = findViewById(R.id.sqrt)
+            val sin: Button = findViewById(R.id.sin)
+
             val div: Button = findViewById(R.id.division)
             val multiply: Button = findViewById(R.id.multiply)
 
@@ -168,10 +173,46 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Main", "ERROR") }
             }
 
+            exp2.setOnClickListener {
+                try {
+                    if(input.text.last() != '^')
+                        SetTextFilds("^2")
+                    else
+                        SetTextFilds("")
+                    cheker = true
+                } catch (e: Exception) {
+                    Log.d("Main", "ERROR")
+                }
+                checker = true }
+
+            exp3.setOnClickListener {
+                try {
+                    if(input.text.last() != '^')
+                        SetTextFilds("^3")
+                    else
+                        SetTextFilds("")
+                    cheker = true
+                } catch (e: Exception) {
+                    Log.d("Main", "ERROR")
+                }
+                checker = true }
+
+            sqrt.setOnClickListener {
+                try {
+                    if(input.text.last() != '√')
+                        SetTextFilds("√2")
+                    else
+                        SetTextFilds("")
+                    cheker = true
+                } catch (e: Exception) {
+                    Log.d("Main", "ERROR")
+                }
+                checker = true }
+
             res.setOnClickListener {
                 try {
                     val expression = input.text.toString()
-                    val result = ExpressionParser.evaluate(expression)
+                    val result = ExpressionParser.evaluate(expression, "all")
                     output.text = result.toString()
                     if(result.toString() == "Infinity" || result.toString() == "ERROR"){
                         output.text = "ERROR"
@@ -182,7 +223,7 @@ class MainActivity : AppCompatActivity() {
                         is NumberFormatException -> {
                             try {
                                 val expression = "0" + input.text.toString()
-                                val result = ExpressionParser.evaluate(expression)
+                                val result = ExpressionParser.evaluate(expression, "all")
                                 output.text = result.toString()
                                 if(result.toString() == "Infinity" || result.toString() == "ERROR"){
                                     output.text = "ERROR"
@@ -359,7 +400,7 @@ class MainActivity : AppCompatActivity() {
             res.setOnClickListener {
                 try {
                     val expression = input.text.toString().replace("(", "").replace(")", "")
-                    val result = ExpressionParser.evaluate(expression)
+                    val result = ExpressionParser.evaluate(expression, "no")
                     output.text = result.toString()
                     if(result.toString() == "Infinity" || result.toString() == "ERROR"){
                         output.text = "ERROR"
@@ -370,7 +411,7 @@ class MainActivity : AppCompatActivity() {
                         is NumberFormatException -> {
                             try {
                                 val expression = "0" + input.text.toString()
-                                val result = ExpressionParser.evaluate(expression)
+                                val result = ExpressionParser.evaluate(expression, "no")
                                 output.text = result.toString()
                                 if(result.toString() == "Infinity" || result.toString() == "ERROR"){
                                     output.text = "ERROR"

@@ -2,10 +2,12 @@ package com.example.calc
 
 import android.content.Context
 import android.widget.Toast
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 object ExpressionParser {
 
-    fun evaluate(expression: String): Double {
+    fun evaluate(expression: String, type: String): Double {
         val withoutSpaces = expression.replace("\\s+".toRegex(), "")
 
         // Деление выражения на части
@@ -64,6 +66,74 @@ object ExpressionParser {
             }
         }
 
+        if (type == "all"){
+            i = 0
+            while (i < parts.size){
+                if (parts[i] == "^"){
+                    val leftOperand = parts[i - 1].toDouble()
+                    val rightOperand = parts[i + 1].toDouble()
+                    when (rightOperand){
+                        2.0 -> {
+                            val result = leftOperand * rightOperand
+                            parts[i - 1] = result.toString()
+                            parts.removeAt(i)
+                            parts.removeAt(i)
+                        }
+                        3.0 -> {
+                            var result = leftOperand
+                            for(tmp in 1 downTo 0 step 1){
+                                result = result * leftOperand
+                            }
+                            parts[i - 1] = result.toString()
+                            parts.removeAt(i)
+                            parts.removeAt(i)
+                        }
+                        else -> {  }
+                    }
+                } else {
+                    i++
+                }
+            }
+
+            i = 0
+            while (i < parts.size){
+                if (parts[i] == "√"){
+                    val leftOperand = parts[i - 1].toDouble()
+                    val rightOperand = parts[i + 1].toDouble()
+                    when (rightOperand){
+                        2.0 -> {
+                            val result = sqrt(leftOperand)
+                            parts[i - 1] = result.toString()
+                            parts.removeAt(i)
+                            parts.removeAt(i)
+                        }
+                        3.0 -> {
+                            var result = sqrt(leftOperand)
+                            parts[i - 1] = result.toString()
+                            parts.removeAt(i)
+                            parts.removeAt(i)
+                        }
+                        else -> {  }
+                    }
+                } else {
+                    i++
+                }
+            }
+
+            i = 0
+            while (i < parts.size){
+                if (parts[i] == "s"){
+                    val rightOperand = parts[i + 1].toDouble()
+                    var result = sin(rightOperand)
+                    parts[i - 1] = result.toString()
+                    parts.removeAt(i + 1) // Remove rightOperand first to avoid index shift
+                    parts[i] = ""
+                } else {
+                    i++
+                }
+            }
+        }
+
         var result = parts[0].toDouble()
         i = 0
         while (i < parts.size){
@@ -78,22 +148,6 @@ object ExpressionParser {
                 i++
             }
         }
-
-//        if (type == "all"){
-//            i = 0
-//            while (i < parts.size){
-//                if (parts[i] == "f" || parts[i] == "f"){
-//                    val leftOperand = parts[i - 1].toDouble()
-//                    val rightOperand = parts[i + 1].toDouble()
-//                    result = if (parts[i] == "+") leftOperand + rightOperand else leftOperand - rightOperand
-//                    parts[i - 1] = result.toString()
-//                    parts.removeAt(i)
-//                    parts.removeAt(i)
-//                } else {
-//                    i++
-//                }
-//            }
-//        }
 
         return result
     }
