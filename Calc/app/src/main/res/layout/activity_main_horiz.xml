@@ -53,9 +53,9 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="#D5D5D5"
             android:fontFamily="@font/baloo_bhai"
-            android:text="AC"
+            android:text="C"
             android:textColor="@color/black"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/plusManus"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +70,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="+/-"
             android:textColor="@color/black"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/percent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +85,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="%"
             android:textColor="@color/black"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/division"
             app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +100,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="/"
             android:textColor="@color/black"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,6 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="7"
             android:textColor="@color/white"
-            android:textSize="8sp"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/btn8"
             app:layout_constraintTop_toBottomOf="@+id/AC" />
@@ -130,7 +129,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="8"
             android:textColor="@color/white"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/btn9"
             app:layout_constraintTop_toBottomOf="@+id/plusManus" />
@@ -145,7 +144,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="9"
             android:textColor="@color/white"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/multiply"
             app:layout_constraintTop_toBottomOf="@+id/percent" />
@@ -160,7 +159,7 @@
             android:fontFamily="@font/baloo_bhai"
             android:text="X"
             android:textColor="@color/black"
-            android:textSize="8sp"
+            android:textSize="8pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/division" />
@@ -328,7 +327,129 @@
             android:textSize="10pt"
             app:cornerRadius="90dp"
             app:layout_constraintEnd_toStartOf="@+id/AC"
-            app:layout_constraintTop_toTopOf="parent" />" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/exp2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="X²"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/result"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/cos"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="72dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="cos"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/ln"
+            app:layout_constraintHorizontal_bias="0.055"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/exp3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="X³"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/exp2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sqrt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="√x"
+            android:textColor="@color/white"
+            android:textSize="5pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/exp3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sqrt3"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="∛x"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/sqrt"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/ln"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="ln"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/sqrt3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/tg"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="tg"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintStart_toEndOf="@+id/cos"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sin"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:backgroundTint="@color/btnNum"
+            android:fontFamily="@font/baloo_bhai"
+            android:text="sin"
+            android:textColor="@color/white"
+            android:textSize="7pt"
+            app:cornerRadius="90dp"
+            app:layout_constraintEnd_toStartOf="@+id/ln"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

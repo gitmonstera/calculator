@@ -16,9 +16,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val isRotated = isScreenRotated(this)
+
         if (isRotated) {
+            // Если горизонтально
             setContentView(R.layout.activity_main_horiz)
             var cheker = true
+            var checker = true
 
             val output: TextView = findViewById(R.id.output)
             val input: TextView = findViewById(R.id.input)
@@ -71,7 +74,8 @@ class MainActivity : AppCompatActivity() {
                         is NoSuchElementException -> {  }
                         else -> { Log.d("Main", "ERROR: $e") }
                     }
-                } }
+                }
+                checker = true }
 
             minus.setOnClickListener {
                 try {
@@ -85,7 +89,8 @@ class MainActivity : AppCompatActivity() {
                         is NoSuchElementException -> { SetTextFilds("-") }
                         else -> Log.d("Main", "ERROR: $e")
                     }
-                } }
+                }
+                checker = true }
             perc.setOnClickListener {
                 try {
                     if(input.text.last() != '%')
@@ -94,7 +99,8 @@ class MainActivity : AppCompatActivity() {
                         SetTextFilds("")
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR: $e")
-                } }
+                }
+            }
             point.setOnClickListener {
                 try {
                     if(cheker) {
@@ -122,7 +128,8 @@ class MainActivity : AppCompatActivity() {
                         }
                         else -> Log.d("Main", "ERROR: $e")
                     }
-                } }
+                }
+                checker = true }
             multiply.setOnClickListener {
                 try {
                     if(input.text.last() != '*')
@@ -132,14 +139,31 @@ class MainActivity : AppCompatActivity() {
                     cheker = true
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR")
-                } }
+                }
+                checker = true }
 
-            mp.setOnClickListener { SetTextFilds("") }
+            mp.setOnClickListener {
+                try {
+                    val tmp = findLastNumber(input.text.toString()).toString()
+                    if (checker){
+                        checker = false
+                        input.text = input.text.toString().dropLast(tmp.length) + "(-" + tmp + ")"
+                    }else{
+                        if (input.text.toString().endsWith("(-" + tmp + ")")){
+                            input.text = input.text.toString().dropLast(tmp.length + 3) + tmp
+                        }
+                        checker = true
+                    }
+                    cheker = true
+                } catch (e: Exception) {
+                    Log.d("Main", "ERROR")
+                } }
             ac.setOnClickListener {
                 try {
                     input.text = ""
                     output.text = ""
                     cheker = true
+                    checker = true
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR") }
             }
@@ -179,6 +203,7 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
 
             var cheker = true
+            var checker = true
 
             val output: TextView = findViewById(R.id.output)
             val input: TextView = findViewById(R.id.input)
@@ -231,7 +256,9 @@ class MainActivity : AppCompatActivity() {
                         is NoSuchElementException -> {  }
                         else -> { Log.d("Main", "ERROR: $e") }
                     }
-                } }
+                }
+                checker = true
+            }
 
             minus.setOnClickListener {
                 try {
@@ -245,7 +272,9 @@ class MainActivity : AppCompatActivity() {
                         is NoSuchElementException -> { SetTextFilds("-") }
                         else -> Log.d("Main", "ERROR: $e")
                     }
-                } }
+                }
+                checker = true
+            }
             perc.setOnClickListener {
                 try {
                     if(input.text.last() != '%')
@@ -254,7 +283,9 @@ class MainActivity : AppCompatActivity() {
                         SetTextFilds("")
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR: $e")
-                } }
+                }
+                checker = true
+            }
             point.setOnClickListener {
                 try {
                     if(cheker) {
@@ -282,7 +313,9 @@ class MainActivity : AppCompatActivity() {
                         }
                         else -> Log.d("Main", "ERROR: $e")
                     }
-                } }
+                }
+                checker = true
+            }
             multiply.setOnClickListener {
                 try {
                     if(input.text.last() != '*')
@@ -292,20 +325,40 @@ class MainActivity : AppCompatActivity() {
                     cheker = true
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR")
+                }
+                checker = true
+            }
+
+
+            mp.setOnClickListener {
+                try {
+                    val tmp = findLastNumber(input.text.toString()).toString()
+                    if (checker){
+                        checker = false
+                        input.text = input.text.toString().dropLast(tmp.length) + "(-" + tmp + ")"
+                    }else{
+                        if (input.text.toString().endsWith("(-" + tmp + ")")){
+                            input.text = input.text.toString().dropLast(tmp.length + 3) + tmp
+                        }
+                        checker = true
+                    }
+                    cheker = true
+                } catch (e: Exception) {
+                    Log.d("Main", "ERROR")
                 } }
 
-            mp.setOnClickListener { SetTextFilds("") }
-            ac.setOnClickListener {
+           ac.setOnClickListener {
                 try {
                     input.text = ""
                     output.text = ""
                     cheker = true
+                    checker = true
                 } catch (e: Exception) {
                     Log.d("Main", "ERROR") } }
 
             res.setOnClickListener {
                 try {
-                    val expression = input.text.toString()
+                    val expression = input.text.toString().replace("(", "").replace(")", "")
                     val result = ExpressionParser.evaluate(expression)
                     output.text = result.toString()
                     if(result.toString() == "Infinity" || result.toString() == "ERROR"){
@@ -344,5 +397,16 @@ class MainActivity : AppCompatActivity() {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val rotation = windowManager.defaultDisplay.rotation
         return rotation == android.view.Surface.ROTATION_90 || rotation == android.view.Surface.ROTATION_270
+    }
+
+    private fun findLastNumber(expression: String): String? {
+        //     val regex = Regex("""-?\d+(\.\d+)?(?![\d.])""")
+        val regex = Regex("""(?=\d)(?:\d+(\.\d+)?)\b""")
+        val matches = regex.findAll(expression)
+        var lastMatch: MatchResult? = null
+        for (match in matches) {
+            lastMatch = match
+        }
+        return lastMatch?.value
     }
 }
