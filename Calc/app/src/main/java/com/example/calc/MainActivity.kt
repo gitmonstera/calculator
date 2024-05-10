@@ -7,6 +7,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
+import android.content.Context
+import android.view.WindowManager
+import android.content.res.Configuration
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,10 +172,24 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        val isRotated = isScreenRotated(this)
+        if (isRotated) {
+            Toast.makeText(this, "RRRR", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "vvv", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     fun SetTextFilds(inputStr: String){
         val input: TextView = findViewById(R.id.input)
         input.append(inputStr)
     }
+
+    fun isScreenRotated(context: Context): Boolean {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val rotation = windowManager.defaultDisplay.rotation
+        return rotation == android.view.Surface.ROTATION_90 || rotation == android.view.Surface.ROTATION_270
+    }
+
 }
