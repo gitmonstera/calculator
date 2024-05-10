@@ -61,7 +61,10 @@ class MainActivity : AppCompatActivity() {
                     SetTextFilds("")
                 cheker = true
             } catch (e: Exception) {
-                Log.d("Main", "ERROR: $e")
+                when(e){
+                    is NoSuchElementException -> {  }
+                    else -> { Log.d("Main", "ERROR: $e") }
+                }
             } }
 
         minus.setOnClickListener {
@@ -72,7 +75,10 @@ class MainActivity : AppCompatActivity() {
                     SetTextFilds("")
                 cheker = true
             } catch (e: Exception) {
-                Log.d("Main", "ERROR: $e")
+                when(e){
+                    is NoSuchElementException -> { SetTextFilds("-") }
+                    else -> Log.d("Main", "ERROR: $e")
+                }
             } }
         perc.setOnClickListener {
             try {
@@ -141,8 +147,19 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 when(e){
-                    is IndexOutOfBoundsException -> { Toast.makeText(this, "ERROR X%Y", Toast.LENGTH_LONG).show() }
-                    is NumberFormatException -> { Toast.makeText(this, "ERROR NumberFormatException", Toast.LENGTH_LONG).show() }
+                    is IndexOutOfBoundsException -> { Toast.makeText(this, "ERROR ", Toast.LENGTH_LONG).show() }
+                    is NumberFormatException -> {
+                        try {
+                            val expression = "0" + input.text.toString()
+                            val result = ExpressionParser.evaluate(expression)
+                            output.text = result.toString()
+                            if(result.toString() == "Infinity" || result.toString() == "ERROR"){
+                                output.text = "ERROR"
+                            }
+                        } catch (e:Exception){
+                            Toast.makeText(this, "ERROR NumberFormatException", Toast.LENGTH_LONG).show()
+                        } }
+                    is NoSuchElementException -> { Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show() }
                     else -> {
                         Log.d("Main", "ERROR: $e")
                         Toast.makeText(this, "ERROR $e", Toast.LENGTH_LONG).show() }

@@ -11,20 +11,28 @@ object ExpressionParser {
         // Деление выражения на части
         val parts = mutableListOf<String>()
         var currentNumber = ""
+        var lastCharWasOperator = false
         for (char in withoutSpaces) {
             if (char.isDigit() || char == '.') {
                 currentNumber += char
+                lastCharWasOperator = false
             } else {
-                if (currentNumber.isNotEmpty()) {
-                    parts.add(currentNumber)
-                    currentNumber = ""
+                if (char == '-' && lastCharWasOperator) {
+                    currentNumber += char
+                } else {
+                    if (currentNumber.isNotEmpty()) {
+                        parts.add(currentNumber)
+                        currentNumber = ""
+                    }
+                    parts.add(char.toString())
+                    lastCharWasOperator = true
                 }
-                parts.add(char.toString())
             }
         }
         if (currentNumber.isNotEmpty()) {
             parts.add(currentNumber)
         }
+
 
         // 1 вычисляем проценты
         var i = 0
