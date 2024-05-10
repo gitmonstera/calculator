@@ -64,17 +64,37 @@ object ExpressionParser {
             }
         }
 
-        // 3 сложение и вычитание
         var result = parts[0].toDouble()
-        var currentOperator = ""
-        for (i in 1 until parts.size step 2) {
-            val operator = parts[i]
-            val operand = parts[i + 1].toDouble()
-            when (operator) {
-                "+" -> result += operand
-                "-" -> result -= operand
+        i = 0
+        while (i < parts.size){
+            if (parts[i] == "+" || parts[i] == "-"){
+                val leftOperand = parts[i - 1].toDouble()
+                val rightOperand = parts[i + 1].toDouble()
+                result = if (parts[i] == "+") leftOperand + rightOperand else leftOperand - rightOperand
+                parts[i - 1] = result.toString()
+                parts.removeAt(i)
+                parts.removeAt(i)
+            } else {
+                i++
             }
         }
+
+//        if (type == "all"){
+//            i = 0
+//            while (i < parts.size){
+//                if (parts[i] == "f" || parts[i] == "f"){
+//                    val leftOperand = parts[i - 1].toDouble()
+//                    val rightOperand = parts[i + 1].toDouble()
+//                    result = if (parts[i] == "+") leftOperand + rightOperand else leftOperand - rightOperand
+//                    parts[i - 1] = result.toString()
+//                    parts.removeAt(i)
+//                    parts.removeAt(i)
+//                } else {
+//                    i++
+//                }
+//            }
+//        }
+
         return result
     }
 }

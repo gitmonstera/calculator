@@ -68,7 +68,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="#D5D5D5"
             android:fontFamily="@font/baloo_bhai"
-            android:text="+/-"
+            android:text="±"
             android:textColor="@color/black"
             android:textSize="8pt"
             app:cornerRadius="90dp"
