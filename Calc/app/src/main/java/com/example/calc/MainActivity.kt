@@ -399,7 +399,7 @@ class MainActivity : AppCompatActivity() {
 
             res.setOnClickListener {
                 try {
-                    val expression = input.text.toString().replace("(", "").replace(")", "")
+                    val expression = "0" + input.text.toString().replace("(", "").replace(")", "")
                     val result = ExpressionParser.evaluate(expression, "no")
                     output.text = result.toString()
                     if(result.toString() == "Infinity" || result.toString() == "ERROR"){
